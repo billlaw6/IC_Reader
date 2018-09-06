@@ -1,0 +1,168 @@
+unit CardDll;
+
+interface
+
+//const  InterfaceDll = '.\DLL\BY_interface.Dll'; //调用的动态链接库
+const  InterfaceDll = '.\BY_interface.Dll'; //调用的动态链接库
+
+Function iDOpenPort(iReaderPort: integer): Integer;	stdcall;
+{ 功能    ：打开端口
+  入口参数：
+            iReaderPort:  端口号    0 Usb端口　1－4　Com1-Com4端口
+            iReaderType : 卡类别　0　以CPU卡
+  返回值  ：端口句柄值;
+            < 0 失败
+  备注    ：
+}
+
+Function iDClosePort(hReaderHandle: Integer	): Integer	; stdcall;
+{ 功能    ：关闭端口
+  入口参数：
+            hReaderHandle:  端口句柄；
+  返回值  ：0　成功;　＜0　失败
+  备注    ：
+}
+
+Function CheckCardType(hReaderHandle: Integer; CardType : PInteger; CardSN : PChar): Integer	; stdcall;
+{ 功能    ：关闭端口
+  入口参数：
+            hReaderHandle:  端口句柄；
+  返回值  ：0　成功;　＜0　失败
+  备注    ：
+}
+
+Function ReadBaseInfo (hReaderHandle: Integer; Lenth: integer; BaseInfo: PChar): Integer	; stdcall;
+{ 功能    ：关闭端口
+  入口参数：
+            hReaderHandle:  端口句柄；
+  返回值  ：0　成功;　＜0　失败
+  备注    ：
+}
+
+Function WriteBaseInfo (hReaderHandle: Integer; Lenth: integer; BaseInfo: String): Integer	; stdcall;
+{ 功能    ：关闭端口
+  入口参数：
+            hReaderHandle:  端口句柄；
+  返回值  ：0　成功;　＜0　失败
+  备注    ：
+}
+
+
+Function WriteBaseInfoVar(hReaderHandle: Integer;
+												   Parient_id,
+												   Patient_name,
+												   Gender,
+												   Birthday,
+												   Charge_type,
+												   Response_type,
+												   BMI_NO: String): Integer	; stdcall;
+{功能:写入卡内基本信息
+输入: int  Handle: 读写器句柄
+char*  Parient_id:  病人ID号码
+      Char* Patient_name:  病人姓名
+      Char*  Gender:       性别
+     Char*  Birthday:     出生日期
+     Char*  Charge_type:   计费类别
+     Char*  Response_type:   身份类别
+      Char*  BMI_NO:        北京医保手册编号
+输出: 无
+返回: int :0 成功
+        非零:错误类型在列表中列出
+}
+
+Function ReadBaseInfoVar(hReaderHandle: Integer;
+												   Parient_id,
+												   Patient_name,
+												   Gender,
+												   Birthday,
+												   Charge_type,
+												   Response_type,
+												   BMI_NO: Pchar): Integer	; stdcall;
+{功能:写入卡内基本信息
+输入: int  Handle: 读写器句柄
+char*  Parient_id:  病人ID号码
+      Char* Patient_name:  病人姓名
+      Char*  Gender:       性别
+     Char*  Birthday:     出生日期
+     Char*  Charge_type:   计费类别
+     Char*  Response_type:   身份类别
+      Char*  BMI_NO:        北京医保手册编号
+输出: 无
+返回: int :0 成功
+        非零:错误类型在列表中列出
+}
+
+function ReadEmployeeInfoVar(hReaderHandle: Integer;
+													  CardType,
+													  ID_Type,
+													  ID_NO,
+													  Name,
+													  Sex,
+													  InvalidDate,
+													  SchoolCode,
+													  PID,
+													  AppVer,
+													  EmployeeNO
+                            : PChar
+													  ): integer; stdcall;
+
+function IDBeep(hReaderHandle: Integer; MSec: Smallint): Integer	; stdcall;
+{功 能：蜂鸣
+
+参 数：hReaderHandle：通讯设备标识符
+
+       unsigned int _Msec：蜂鸣时间，单位是10毫秒
+
+返 回：成功则返回 0
+}
+
+function ReadEmployeeNO(hReaderHandle: Integer; EmployeeNO: PChar): integer; stdcall;
+
+
+Function ReadEmployeeInfo (hReaderHandle: Integer; Lenth: integer; BaseInfo: PChar): Integer	; stdcall;
+{ 功能    ：关闭端口
+  入口参数：
+            hReaderHandle:  端口句柄；
+  返回值  ：0　成功;　＜0　失败
+  备注    ：
+}
+
+function CreateCard(hReaderHandle: Integer;szCardID: PChar; szPin: String): integer; stdcall;
+
+
+function SetTK(hReaderHandle: Integer): integer; stdcall;
+
+function CleanCard(hReaderHandle: Integer; PIN: String): integer; stdcall;
+
+implementation
+
+{Function iDOpenPort; external InterfaceDll name 'j_iDOpenPort';
+Function iDClosePort; external InterfaceDll name 'j_iDClosePort';
+Function CheckCardType; external InterfaceDll name 'j_CheckCardType';
+Function ReadBaseInfo; external InterfaceDll name 'j_ReadBaseInfo';
+Function WriteBaseInfo; external InterfaceDll name 'j_WriteBaseInfo';
+Function WriteBaseInfoVar; external InterfaceDll name 'j_WriteBaseInfoVar';
+Function ReadBaseInfoVar; external InterfaceDll name 'j_ReadBaseInfoVar';
+Function IDBeep; external InterfaceDll name 'j_IDBeep';
+function ReadEmployeeNO; external InterfaceDll name 'j_ReadEmployeeNO';
+
+Function ReadEmployeeInfo; external InterfaceDll name 'j_ReadEmployeeInfo';
+function ReadEmployeeInfoVar; external InterfaceDll name 'j_ReadEmployeeInfoVar';   }
+
+Function iDOpenPort; external InterfaceDll name 'iDOpenPort';
+Function iDClosePort; external InterfaceDll name 'iDClosePort';
+Function CheckCardType; external InterfaceDll name 'CheckCardType';
+Function ReadBaseInfo; external InterfaceDll name 'ReadBaseInfo';
+Function WriteBaseInfo; external InterfaceDll name 'WriteBaseInfo';
+Function WriteBaseInfoVar; external InterfaceDll name 'WriteBaseInfoVar';
+Function ReadBaseInfoVar; external InterfaceDll name 'ReadBaseInfoVar';
+Function IDBeep; external InterfaceDll name 'IDBeep';
+function ReadEmployeeNO; external InterfaceDll name 'ReadEmployeeNO';
+
+Function ReadEmployeeInfo; external InterfaceDll name 'ReadEmployeeInfo';
+function ReadEmployeeInfoVar; external InterfaceDll name 'ReadEmployeeInfoVar';
+function CreateCard; external InterfaceDll name 'CreateCard';
+function SetTK; external InterfaceDll name 'SetTK';
+
+function CleanCard; external InterfaceDll name 'CleanCard';
+end.
